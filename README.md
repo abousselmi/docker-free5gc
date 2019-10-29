@@ -7,10 +7,10 @@ The `Dockerfile` provides a multi-stage build. The build image
 is based on the `Golang` docker image `golang:1.12.9-stretch`.
 
 The final image is an `ubuntu:18.04` docker image and contains
-the Control and User Plane executables. You can find them in
+the Control and User Plane executables. You can find them under
 `/root/free5gc`.
 
-Ths directory should look like:
+This directory should look like:
 
 ```shell
 root@be8d807c8fe5:~/free5gc# tree    
