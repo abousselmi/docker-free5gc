@@ -1,0 +1,119 @@
+version: "3.7"
+services:
+  mongodb:
+    image: mongo:4.2
+    container_name: free5gc-mongodb
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+  
+  amf:
+    image: free5gc-v2
+    container_name: free5gc-amf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./amf
+
+  smf:
+    image: free5gc-v2
+    container_name: free5gc-smf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./smf
+
+  pcf:
+    image: free5gc-v2
+    container_name: free5gc-pcf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./pcf
+
+  ausf:
+    image: free5gc-v2
+    container_name: free5gc-ausf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./ausf
+
+  nrf:
+    image: free5gc-v2
+    container_name: free5gc-nrf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./nrf
+
+  nssf:
+    image: free5gc-v2
+    container_name: free5gc-nssf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./nssf
+
+  udm:
+    image: free5gc-v2
+    container_name: free5gc-udm
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./udm
+
+  udr:
+    image: free5gc-v2
+    container_name: free5gc-udr
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./udr
+
+  upf:
+    image: free5gc-v2
+    container_name: free5gc-upf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    entrypoint:
+      - ./upf
