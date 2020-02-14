@@ -43,7 +43,7 @@ root@be8d807c8fe5:~/free5gc# tree
 To build the image, you can simply use:
 
 ```shell
-docker build -t free5gc-s2:latest .
+docker build -t free5gc-v2:latest .
 ```
 
 ## Functions Matrix
