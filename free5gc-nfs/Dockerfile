@@ -13,11 +13,15 @@ LABEL project="free5gc" \
 ENV F5GC_VERSION ${F5GC_VERSION}
 ENV F5GC_MODULE ${F5GC_MODULE}
 
-WORKDIR /free5gc/${F5GC_MODULE}
-RUN mkdir -p config/ log/ support/tls/
+# Debug tools (to be removed)
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y vim strace net-tools
+
+WORKDIR /free5gc
+RUN mkdir -p config/ log/ support/TLS/ ${F5GC_MODULE}/
 
 # Copy executable and default configuration 
-COPY --from=builder /free5gc/${F5GC_MODULE} ./
+COPY --from=builder /free5gc/${F5GC_MODULE} ./${F5GC_MODULE}/
 
 # FIXME: config: since default config files can't be used as is,
 #+ it's useless to include them in the final base image.
@@ -25,18 +29,14 @@ COPY --from=builder /free5gc/${F5GC_MODULE} ./
 #+ generation loop.
 # A quick fix is to include those files in the docker compose file.
 
-
-# Global config file volume: free5gc.conf
-VOLUME [ "/free5gc/config"]
-
-# Module specific config file volume: e.g. udrcfg.yaml
-VOLUME [ "/free5gc/${F5GC_MODULE}/config" ]
+# Config files volume
+VOLUME [ "/free5gc/config" ]
 
 # Logging volume
-VOLUME [ "/free5gc/${F5GC_MODULE}/log" ]
+VOLUME [ "/free5gc/log" ]
 
 # Certificates (if present) volume
-VOLUME [ "/free5gc/${F5GC_MODULE}/support/tls" ]
+VOLUME [ "/free5gc/support/TLS" ]
 
 # FIXME: find a way to add exposed ports
 
