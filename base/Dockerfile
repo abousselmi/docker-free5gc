@@ -38,10 +38,11 @@ RUN cd $GOPATH/src/free5gc/src/upf \
     && cmake .. \
     && make -j `nproc`
 
+# Alpine is used for debug purpose. You can use scratch for a smaller footprint.
 FROM alpine
 
 WORKDIR /free5gc
-RUN mkdir -p config/ support/tls/
+RUN mkdir -p config/ support/TLS/
 
 # Copy executables
 COPY --from=builder /go/src/free5gc/bin/* ./
@@ -52,9 +53,7 @@ COPY --from=builder /go/src/free5gc/config/* ./config/
 COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./config/
 
 # Copy default certificates (not used for now)
-COPY --from=builder /go/src/free5gc/support/TLS/* ./support/tls/
+COPY --from=builder /go/src/free5gc/support/TLS/* ./support/TLS/
 
-# Update upf executable name & harmonize config files extensions
-RUN mv free5gc-upfd upf \
-    && cd config \
-    && for f in *.conf ; do mv -- "$f" "${f%.conf}.yaml"; done ;
+# Update upf executable name
+RUN mv free5gc-upfd upf
