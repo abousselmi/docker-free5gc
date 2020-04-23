@@ -17,3 +17,11 @@ CP functions are:
 UP function is:
 
  - `UPF`
+
+### Utilities
+
+Quick clean up of all free5gc docker images
+
+```console
+docker image ls | grep free | awk '{ print $3 }' | xargs docker rmi -f
+```
