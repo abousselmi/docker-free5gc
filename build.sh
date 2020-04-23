@@ -21,11 +21,11 @@ function print_banner {
 }
 
 function log {
-    echo -e "🔥${GREEN} $(date +"%F %r")[INFO] $1 ${NC}"
+    echo -e "🔥${GREEN} $(date +"%F %r")[INFO] $0 $1 ${NC}"
 }
 
 function logerr {
-    echo -e "🔥${RED} $(date +"%F %r")[ERRO] $1 ${NC}"
+    echo -e "🔥${RED} $(date +"%F %r")[ERRO] $0 $1 ${NC}"
 }
 
 [[ -z "$F5GC_VERSION" ]] \
@@ -40,9 +40,9 @@ function build_base {
     DOCKER_IMAGE="free5gc-base-v2:$F5GC_VERSION"
     IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
     if [ "$IMG_CHECK" != "" ] ; then
-        log "docker image $DOCKER_IMAGE is found locally, skipping build"
+        log "docker image '$DOCKER_IMAGE' is found locally, skipping build"
     else
-        log "build base image"
+        log "build 'base' image"
         docker build \
             -t $DOCKER_IMAGE \
             ./base > /dev/null
@@ -58,9 +58,9 @@ function build_nfs {
         IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
 
         if [ "$IMG_CHECK" != "" ] ; then
-            log "docker image $DOCKER_IMAGE is found locally, skipping build"
+            log "docker image '$DOCKER_IMAGE' is found locally, skipping build"
         else
-            log "build image for function $module"
+            log "build image for function '$module'"
             docker build \
                 --build-arg F5GC_VERSION=$F5GC_VERSION \
                 --build-arg F5GC_MODULE=$F5GC_MODULE \
