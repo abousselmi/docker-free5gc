@@ -6,47 +6,91 @@ A docker image for the [Free5GC](https://www.free5gc.org) (stage 2) open source 
 The `Dockerfile` provides a multi-stage build. The build image
 is based on the `Golang` docker image `golang:1.12.9-stretch`.
 
-The final image is an `ubuntu:18.04` docker image and contains
+The final image is an `alpine` docker image and contains
 the Control and User Plane executables. You can find them under
-`/root/free5gc`.
+`/free5gc`.
 
 This directory should look like:
 
 ```shell
-root@be8d807c8fe5:~/free5gc# tree    
+/free5gc # apk add -U tree
+/free5gc # tree 
 .
-|-- amf
-|-- ausf
-|-- config
-|   |-- amfcfg.conf
-|   |-- ausfcfg.conf
-|   |-- free5GC.conf
-|   |-- nrfcfg.conf
-|   |-- nssfcfg.conf
-|   |-- pcfcfg.conf
-|   |-- smfcfg.conf
-|   |-- udmcfg.conf
-|   |-- udrcfg.conf
-|   `-- upfcfg.yaml
-|-- free5gc-upfd
-|-- nrf
-|-- nssf
-|-- pcf
-|-- smf
-|-- testgtpv1
-|-- udm
-`-- udr
+├── amf
+├── ausf
+├── config
+│   ├── amfcfg.yaml
+│   ├── ausfcfg.yaml
+│   ├── free5GC.yaml
+│   ├── n3iwfcfg.yaml
+│   ├── nrfcfg.yaml
+│   ├── nssfcfg.yaml
+│   ├── pcfcfg.yaml
+│   ├── smfcfg.test.yaml
+│   ├── smfcfg.yaml
+│   ├── udmcfg.yaml
+│   ├── udrcfg.yaml
+│   ├── upfcfg.test.yaml
+│   └── upfcfg.yaml
+├── n3iwf
+├── nrf
+├── nssf
+├── pcf
+├── smf
+├── support
+│   └── tls
+│       ├── _debug.key
+│       ├── _debug.pem
+│       ├── amf.key
+│       ├── amf.pem
+│       ├── ausf.key
+│       ├── ausf.pem
+│       ├── nrf.key
+│       ├── nrf.pem
+│       ├── nssf.key
+│       ├── nssf.pem
+│       ├── pcf.key
+│       ├── pcf.pem
+│       ├── smf.key
+│       ├── smf.pem
+│       ├── udm.key
+│       ├── udm.pem
+│       ├── udr.key
+│       └── udr.pem
+├── testgtpv1
+├── udm
+├── udr
+└── upf
+
+3 directories, 42 files
 ```
 
-## Build docker image
+## Build docker images
 
-To build the image, you can simply use:
+### Base image
+We start by building the `base` image. This image is used to build different executables from source.
 
 ```shell
-docker build -t free5gc-v2:latest .
+export F5GC_VERSION=v2.0.2
+docker build -t free5gc-base-v2:$F5GC_VERSION ./base
 ```
 
-## Functions Matrix
+### Control and User plane functions
+
+Then you can build all the modules by simply running the `build.sh` script:
+
+```shell
+export F5GC_VERSION=v2.0.2
+./build.sh
+```
+
+## Next steps
+
+ - Create a CI/CD chain using docker hub or Travis
+ - Create kubernetes resource descriptors
+ - Create a chart to deploy on k8s using helm
+
+ ## Appendix A: Functions Matrix
 
 This table is created based on the default configuration files of Free5GC.
 
