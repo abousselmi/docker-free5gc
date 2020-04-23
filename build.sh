@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+F5GC_GIT="https://bitbucket.org/free5GC/free5gc-stage-2.git"
+
+RED='\e[0;31m'
+GREEN='\e[0;32m'
+MAGENTA='\e[0;35m'
+NC='\e[0m'
+
+function banner_echo {
+    echo -e "${MAGENTA}$1${NC}"
+}
+
+function print_banner {
+    banner_echo " ____             _               _____              ____   ____  ____ "
+    banner_echo "|  _ \  ___   ___| | _____ _ __  |  ___| __ ___  ___| ___| / ___|/ ___|"
+    banner_echo "| | | |/ _ \ / __| |/ / _ \ '__| | |_ | '__/ _ \/ _ \___ \| |  _| |    "
+    banner_echo "| |_| | (_) | (__|   <  __/ |    |  _|| | |  __/  __/___) | |_| | |___ "
+    banner_echo "|____/ \___/ \___|_|\_\___|_|    |_|  |_|  \___|\___|____/ \____|\____|"
+    echo ""
+}
+
+function log {
+    echo -e "${GREEN}[INFO] $1 ${NC}"
+}
+
+function logerr {
+    echo -e "${RED}[ERRO] $1 ${NC}"
+}
+
+[[ -z "$F5GC_VERSION" ]] \
+    && {
+        logerr "env var F5GC_VERSION is not set";
+        logerr "available versions are: "
+        git ls-remote --tags $F5GC_GIT | awk -F/ '{ print $3 }' | grep -v '{}'
+        exit 1;
+    }
+
+function build_base {
+    DOCKER_IMAGE="free5gc-base-v2:$F5GC_VERSION"
+    IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
+    if [ "$IMG_CHECK" != "" ] ; then
+        log "docker image $DOCKER_IMAGE is found locally, skipping build"
+    else
+        log "build base image"
+        docker build \
+            -t $DOCKER_IMAGE \
+            ./base > /dev/null
+    fi
+}
+
+function build_nfs {
+    # Build: amf ausf nrf nssf pcf smf udm udr n3iwf upf
+    for module in amf ausf nrf nssf pcf smf udm udr n3iwf upf; do
+        export F5GC_MODULE=$module
+
+        DOCKER_IMAGE="free5gc-$F5GC_MODULE-v2:$F5GC_VERSION"
+        IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
+
+        if [ "$IMG_CHECK" != "" ] ; then
+            log "docker image $DOCKER_IMAGE is found locally, skipping build"
+        else
+            log "build image for function $module"
+            docker build \
+                --build-arg F5GC_VERSION=$F5GC_VERSION \
+                --build-arg F5GC_MODULE=$F5GC_MODULE \
+                -t $DOCKER_IMAGE \
+                ./free5gc-nfs > /dev/null
+        fi
+    done
+}
+
+clear
+print_banner
+
+echo -e "Grab a coffee, this might take some time.."
+start=`date +%s`
+
+build_base
+build_nfs
+
+end=`date +%s`
+duration=$((end-start))
+log "completed in $duration seconds"
