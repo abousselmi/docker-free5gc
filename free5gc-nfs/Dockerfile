@@ -24,14 +24,18 @@ COPY --from=builder /free5gc/${F5GC_MODULE} ./
 # FIXME: tls: not all modules use tls, which breaks the generic image
 #+ generation loop.
 # A quick fix is to include those files in the docker compose file.
-#COPY --from=builder /free5gc/config/${F5GC_MODULE}cfg.conf ./config
-#COPY --from=builder /free5gc/config/free5GC.conf ./config
-#COPY --from=builder /free5gc/support/tls/${F5GC_MODULE}.pem ./support/tls/
-#COPY --from=builder /free5gc/support/tls/${F5GC_MODULE}.key ./support/tls/
 
-# The following volumes could be used for custom configuration
+
+# Global config file volume: free5gc.conf
+VOLUME [ "/free5gc/config"]
+
+# Module specific config file volume: e.g. udrcfg.yaml
 VOLUME [ "/free5gc/${F5GC_MODULE}/config" ]
+
+# Logging volume
 VOLUME [ "/free5gc/${F5GC_MODULE}/log" ]
+
+# Certificates (if present) volume
 VOLUME [ "/free5gc/${F5GC_MODULE}/support/tls" ]
 
 # FIXME: find a way to add exposed ports
