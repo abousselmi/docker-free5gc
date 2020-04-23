@@ -1,5 +1,8 @@
 FROM golang:1.12.9-stretch AS builder
 
+# Free5GC version
+ENV F5GC_VERSION=v2.0.2
+
 # Disable Go 1.11 Modules
 ENV GO111MODULE=off
 
@@ -19,6 +22,7 @@ RUN DEBIAND_FRONTEND=noninteractive apt-get -y update \
 RUN cd $GOPATH/src \
     && git clone https://bitbucket.org/free5GC/free5gc-stage-2.git free5gc \
     && cd $GOPATH/src/free5gc \
+    && git checkout $F5GC_VERSION \
     && chmod +x ./install_env.sh \
     && ./install_env.sh \
     && tar -C $GOPATH -zxvf free5gc_libs.tar.gz
@@ -34,13 +38,23 @@ RUN cd $GOPATH/src/free5gc/src/upf \
     && cmake .. \
     && make -j `nproc`
 
-FROM ubuntu:18.04
+FROM alpine
 
-WORKDIR /root/free5gc
+WORKDIR /free5gc
+RUN mkdir -p config/ support/tls/
+
+# Copy executables
 COPY --from=builder /go/src/free5gc/bin/* ./
 COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
-RUN mkdir config/
+
+# Copy configuration files (not used for now)
 COPY --from=builder /go/src/free5gc/config/* ./config/
 COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./config/
 
-CMD [ "/bin/bash" ]
+# Copy default certificates (not used for now)
+COPY --from=builder /go/src/free5gc/support/TLS/* ./support/tls/
+
+# Update upf executable name & harmonize config files extensions
+RUN mv free5gc-upfd upf \
+    && cd config \
+    && for f in *.conf ; do mv -- "$f" "${f%.conf}.yaml"; done ;
