@@ -21,11 +21,11 @@ function print_banner {
 }
 
 function log {
-    echo -e "${GREEN}[INFO] $1 ${NC}"
+    echo -e "🔥${GREEN} $(date +"%F %r")[INFO] $1 ${NC}"
 }
 
 function logerr {
-    echo -e "${RED}[ERRO] $1 ${NC}"
+    echo -e "🔥${RED} $(date +"%F %r")[ERRO] $1 ${NC}"
 }
 
 [[ -z "$F5GC_VERSION" ]] \
