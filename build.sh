@@ -30,9 +30,10 @@ function logerr {
 
 [[ -z "$F5GC_VERSION" ]] \
     && {
-        logerr "env var F5GC_VERSION is not set";
-        logerr "available versions are: "
-        git ls-remote --tags $F5GC_GIT | awk -F/ '{ print $3 }' | grep -v '{}'
+        logerr "F5GC_VERSION env var is not set";
+        versions=$(git ls-remote --tags $F5GC_GIT | awk -F/ '{ print $3 }' | grep -v '{}' | tr '\n' ' ')
+        logerr "available versions are: $versions"
+        logerr "try: export F5GC_VERSION=v2.0.2"
         exit 1;
     }
 
