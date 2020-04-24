@@ -23,6 +23,7 @@ RUN cd $GOPATH/src \
     && git clone https://bitbucket.org/free5GC/free5gc-stage-2.git free5gc \
     && cd $GOPATH/src/free5gc \
     && git checkout $F5GC_VERSION \
+    && sed -i 's/ipv4Adrr/ipv4Addr/g' src/udm/factory/config_nrf.go src/udm/factory/config_cfg.go \
     && chmod +x ./install_env.sh \
     && ./install_env.sh \
     && tar -C $GOPATH -zxvf free5gc_libs.tar.gz
