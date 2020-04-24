@@ -15,7 +15,7 @@ ENV F5GC_MODULE ${F5GC_MODULE}
 
 # Debug tools (to be removed)
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y vim strace net-tools
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y vim strace net-tools curl
 
 WORKDIR /free5gc
 RUN mkdir -p config/ log/ support/TLS/ ${F5GC_MODULE}/
