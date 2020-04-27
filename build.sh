@@ -71,6 +71,25 @@ function build_nfs {
     done
 }
 
+function build_webui {
+    # Build webui
+    export F5GC_MODULE="webui"
+
+    DOCKER_IMAGE="free5gc-$F5GC_MODULE-v2:$F5GC_VERSION"
+    IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
+
+    if [ "$IMG_CHECK" != "" ] ; then
+        log "docker image '$DOCKER_IMAGE' is found locally, skipping build"
+    else
+        log "build image for module 'webui'"
+        docker build \
+            --build-arg F5GC_VERSION=$F5GC_VERSION \
+            --build-arg F5GC_MODULE=$F5GC_MODULE \
+            -t $DOCKER_IMAGE \
+            ./webui > /dev/null
+    fi
+}
+
 clear
 print_banner
 
@@ -79,6 +98,7 @@ start=`date +%s`
 
 build_base
 build_nfs
+build_webui
 
 end=`date +%s`
 duration=$((end-start))

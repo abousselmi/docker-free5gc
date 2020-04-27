@@ -39,6 +39,10 @@ RUN cd $GOPATH/src/free5gc/src/upf \
     && cmake .. \
     && make -j `nproc`
 
+# Build WebUI
+RUN cd $GOPATH/src/free5gc/webconsole \
+    && go build -o webui -x server.go
+
 # Alpine is used for debug purpose. You can use scratch for a smaller footprint.
 FROM alpine
 
@@ -48,6 +52,7 @@ RUN mkdir -p config/ support/TLS/
 # Copy executables
 COPY --from=builder /go/src/free5gc/bin/* ./
 COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
+COPY --from=builder /go/src/free5gc/webconsole/webui ./
 
 # Copy configuration files (not used for now)
 COPY --from=builder /go/src/free5gc/config/* ./config/
