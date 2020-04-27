@@ -89,6 +89,7 @@ export F5GC_VERSION=v2.0.2
  - Create a CI/CD chain using docker hub or Travis
  - Create kubernetes resource descriptors
  - Create a chart to deploy on k8s using helm
+ - Use weave.works router for networking
 
  ## Appendix A: Functions Matrix
 
