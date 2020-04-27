@@ -1,6 +1,9 @@
 ARG F5GC_VERSION=v2.0.2
 FROM free5gc-base-v2:${F5GC_VERSION} as builder
 
+# FIXME: a base image e.g. ubuntu-debug:18.04 should be used
+#+ instead of installing debug tools for each created image.
+#+ this slows down very much the build phase.
 FROM ubuntu:18.04
 ARG F5GC_VERSION=v2.0.2
 ARG F5GC_MODULE
