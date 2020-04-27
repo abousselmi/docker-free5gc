@@ -29,4 +29,7 @@ VOLUME [ "/free5gc/config" ]
 # WebUI uses the port 5000
 EXPOSE 5000
 
+# Move to the executable location
+WORKDIR /free5gc/${F5GC_MODULE}
+
 ENTRYPOINT [ "/bin/bash" ]

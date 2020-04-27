@@ -43,4 +43,7 @@ VOLUME [ "/free5gc/support/TLS" ]
 
 # FIXME: find a way to add exposed ports
 
+# Move to the executable location
+WORKDIR /free5gc/${F5GC_MODULE}
+
 ENTRYPOINT [ "/bin/bash" ]
