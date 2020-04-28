@@ -26,6 +26,9 @@ RUN mkdir -p config/ log/ support/TLS/ ${F5GC_MODULE}/
 # Copy executable and default configuration 
 COPY --from=builder /free5gc/${F5GC_MODULE} ./${F5GC_MODULE}/
 
+# Move to the executable location
+WORKDIR /free5gc/${F5GC_MODULE}
+
 # FIXME: config: since default config files can't be used as is,
 #+ it's useless to include them in the final base image.
 # FIXME: tls: not all modules use tls, which breaks the generic image
@@ -35,15 +38,9 @@ COPY --from=builder /free5gc/${F5GC_MODULE} ./${F5GC_MODULE}/
 # Config files volume
 VOLUME [ "/free5gc/config" ]
 
-# Logging volume
-VOLUME [ "/free5gc/log" ]
-
 # Certificates (if present) volume
 VOLUME [ "/free5gc/support/TLS" ]
 
 # FIXME: find a way to add exposed ports
-
-# Move to the executable location
-WORKDIR /free5gc/${F5GC_MODULE}
 
 ENTRYPOINT [ "/bin/bash" ]
