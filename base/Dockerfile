@@ -24,6 +24,7 @@ RUN cd $GOPATH/src \
     && cd $GOPATH/src/free5gc \
     && git checkout $F5GC_VERSION \
     && sed -i 's/ipv4Adrr/ipv4Addr/g' src/udm/factory/config_nrf.go src/udm/factory/config_cfg.go \
+    && sed -i 's/udrcfg/webuicfg/g' webconsole/backend/webui_service/webui_init.go \
     && chmod +x ./install_env.sh \
     && ./install_env.sh \
     && tar -C $GOPATH -zxvf free5gc_libs.tar.gz
