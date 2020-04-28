@@ -1,119 +1,264 @@
-version: "3.7"
+# Docker-compose for Free5GC (stage v2, version v2.0.2)
+version: "3.8"
 services:
+ 
+  amf:
+    image: free5gc-amf-v2:v2.0.2
+    container_name: free5gc-amf
+    command: -c ./amf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/amfcfg.conf:/free5gc/config/amfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/amf.pem:/free5gc/support/TLS/amf.pem
+      - ./support/tls/amf.key:/free5gc/support/TLS/amf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - amf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  smf:
+    image: free5gc-smf-v2:v2.0.2
+    container_name: free5gc-smf
+    command: -c ./smf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/smfcfg.conf:/free5gc/config/smfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/smf.pem:/free5gc/support/TLS/smf.pem
+      - ./support/tls/smf.key:/free5gc/support/TLS/smf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - smf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  pcf:
+    image: free5gc-pcf-v2:v2.0.2
+    container_name: free5gc-pcf
+    command: -c ./pcf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/pcfcfg.conf:/free5gc/config/pcfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/pcf.pem:/free5gc/support/TLS/pcf.pem
+      - ./support/tls/pcf.key:/free5gc/support/TLS/pcf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - pcf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  ausf:
+    image: free5gc-ausf-v2:v2.0.2
+    container_name: free5gc-ausf
+    command: -c ./ausf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/ausfcfg.conf:/free5gc/config/ausfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/ausf.pem:/free5gc/support/TLS/ausf.pem
+      - ./support/tls/ausf.key:/free5gc/support/TLS/ausf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - ausf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  nrf:
+    image: free5gc-nrf-v2:v2.0.2
+    container_name: free5gc-nrf
+    command: -c ./nrf
+    depends_on:
+      - mongodb
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/nrfcfg.conf:/free5gc/config/nrfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/nrf.pem:/free5gc/support/TLS/nrf.pem
+      - ./support/tls/nrf.key:/free5gc/support/TLS/nrf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - nrf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  nssf:
+    image: free5gc-nssf-v2:v2.0.2
+    container_name: free5gc-nssf
+    command: -c ./nssf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/nssfcfg.conf:/free5gc/config/nssfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/nssf.pem:/free5gc/support/TLS/nssf.pem
+      - ./support/tls/nssf.key:/free5gc/support/TLS/nssf.key
+    networks:
+      control_plane_net:
+        aliases:
+          - nssf
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  n3iwf:
+    image: free5gc-n3iwf-v2:v2.0.2
+    container_name: free5gc-n3iwf
+    command: -c ./n3iwf
+    depends_on:
+      - nrf
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/n3iwfcfg.conf:/free5gc/config/n3iwfcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+    networks:
+      control_plane_net:
+        aliases:
+          - n3iwf
+    links: 
+      - "amf"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  udm:
+    image: free5gc-udm-v2:v2.0.2
+    container_name: free5gc-udm
+    command: -c ./udm
+    depends_on:
+      - nrf
+      - mongodb
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/udmcfg.conf:/free5gc/config/udmcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/udm.pem:/free5gc/support/TLS/udm.pem
+      - ./support/tls/udm.key:/free5gc/support/TLS/udm.key
+    networks:
+      control_plane_net:
+        aliases:
+          - udm
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  udr:
+    image: free5gc-udr-v2:v2.0.2
+    container_name: free5gc-udr
+    command: -c ./udr
+    depends_on:
+      - nrf
+      - mongodb
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/udrcfg.conf:/free5gc/config/udrcfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+      - ./support/tls/udr.pem:/free5gc/support/TLS/udr.pem
+      - ./support/tls/udr.key:/free5gc/support/TLS/udr.key
+    networks:
+      control_plane_net:
+        aliases:
+          - udr
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  webui:
+    image: free5gc-webui-v2:v2.0.2
+    container_name: free5gc-webui
+    command: -c ./webui
+    depends_on:
+      - mongodb
+    environment:
+      - GIN_MODE=debug # release for less verbosity
+    volumes:
+      - ./config/webuicfg.conf:/free5gc/config/webuicfg.conf
+      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+    ports:
+      - "5000:5000"
+    networks:
+      - webui_net
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
   mongodb:
     image: mongo:4.2
     container_name: free5gc-mongodb
+    networks:
+      control_plane_net:
+        aliases:
+          - mongodb
+      webui_net:
+        aliases:
+          - mongodb
     deploy:
       restart_policy:
         condition: on-failure
         delay: 5s
         max_attempts: 3
         window: 120s
-  
-  amf:
-    image: free5gc-v2
-    container_name: free5gc-amf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./amf
 
-  smf:
-    image: free5gc-v2
-    container_name: free5gc-smf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./smf
-
-  pcf:
-    image: free5gc-v2
-    container_name: free5gc-pcf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./pcf
-
-  ausf:
-    image: free5gc-v2
-    container_name: free5gc-ausf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./ausf
-
-  nrf:
-    image: free5gc-v2
-    container_name: free5gc-nrf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./nrf
-
-  nssf:
-    image: free5gc-v2
-    container_name: free5gc-nssf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./nssf
-
-  udm:
-    image: free5gc-v2
-    container_name: free5gc-udm
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./udm
-
-  udr:
-    image: free5gc-v2
-    container_name: free5gc-udr
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./udr
-
-  upf:
-    image: free5gc-v2
-    container_name: free5gc-upf
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
-    entrypoint:
-      - ./free5gc-upfd
+networks:
+  control_plane_net:
+  webui_net:
