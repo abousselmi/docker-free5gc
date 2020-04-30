@@ -13,8 +13,8 @@ services:
     volumes:
       - ./config/amfcfg.conf:/free5gc/config/amfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/amf.pem:/free5gc/support/TLS/amf.pem
-      - ./support/tls/amf.key:/free5gc/support/TLS/amf.key
+      - ./tls/amf.pem:/free5gc/support/TLS/amf.pem
+      - ./tls/amf.key:/free5gc/support/TLS/amf.key
     networks:
       control_plane_net:
         aliases:
@@ -37,8 +37,8 @@ services:
     volumes:
       - ./config/smfcfg.conf:/free5gc/config/smfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/smf.pem:/free5gc/support/TLS/smf.pem
-      - ./support/tls/smf.key:/free5gc/support/TLS/smf.key
+      - ./tls/smf.pem:/free5gc/support/TLS/smf.pem
+      - ./tls/smf.key:/free5gc/support/TLS/smf.key
     networks:
       control_plane_net:
         aliases:
@@ -61,8 +61,8 @@ services:
     volumes:
       - ./config/pcfcfg.conf:/free5gc/config/pcfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/pcf.pem:/free5gc/support/TLS/pcf.pem
-      - ./support/tls/pcf.key:/free5gc/support/TLS/pcf.key
+      - ./tls/pcf.pem:/free5gc/support/TLS/pcf.pem
+      - ./tls/pcf.key:/free5gc/support/TLS/pcf.key
     networks:
       control_plane_net:
         aliases:
@@ -85,8 +85,8 @@ services:
     volumes:
       - ./config/ausfcfg.conf:/free5gc/config/ausfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/ausf.pem:/free5gc/support/TLS/ausf.pem
-      - ./support/tls/ausf.key:/free5gc/support/TLS/ausf.key
+      - ./tls/ausf.pem:/free5gc/support/TLS/ausf.pem
+      - ./tls/ausf.key:/free5gc/support/TLS/ausf.key
     networks:
       control_plane_net:
         aliases:
@@ -109,8 +109,8 @@ services:
     volumes:
       - ./config/nrfcfg.conf:/free5gc/config/nrfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/nrf.pem:/free5gc/support/TLS/nrf.pem
-      - ./support/tls/nrf.key:/free5gc/support/TLS/nrf.key
+      - ./tls/nrf.pem:/free5gc/support/TLS/nrf.pem
+      - ./tls/nrf.key:/free5gc/support/TLS/nrf.key
     networks:
       control_plane_net:
         aliases:
@@ -133,8 +133,8 @@ services:
     volumes:
       - ./config/nssfcfg.conf:/free5gc/config/nssfcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/nssf.pem:/free5gc/support/TLS/nssf.pem
-      - ./support/tls/nssf.key:/free5gc/support/TLS/nssf.key
+      - ./tls/nssf.pem:/free5gc/support/TLS/nssf.pem
+      - ./tls/nssf.key:/free5gc/support/TLS/nssf.key
     networks:
       control_plane_net:
         aliases:
@@ -182,8 +182,8 @@ services:
     volumes:
       - ./config/udmcfg.conf:/free5gc/config/udmcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/udm.pem:/free5gc/support/TLS/udm.pem
-      - ./support/tls/udm.key:/free5gc/support/TLS/udm.key
+      - ./tls/udm.pem:/free5gc/support/TLS/udm.pem
+      - ./tls/udm.key:/free5gc/support/TLS/udm.key
     networks:
       control_plane_net:
         aliases:
@@ -207,8 +207,8 @@ services:
     volumes:
       - ./config/udrcfg.conf:/free5gc/config/udrcfg.conf
       - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-      - ./support/tls/udr.pem:/free5gc/support/TLS/udr.pem
-      - ./support/tls/udr.key:/free5gc/support/TLS/udr.key
+      - ./tls/udr.pem:/free5gc/support/TLS/udr.pem
+      - ./tls/udr.key:/free5gc/support/TLS/udr.key
     networks:
       control_plane_net:
         aliases:
