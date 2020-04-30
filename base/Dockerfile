@@ -1,7 +1,8 @@
 FROM golang:1.12.9-stretch AS builder
 
 # Free5GC version
-ENV F5GC_VERSION=v2.0.2
+ARG F5GC_VERSION=v2.0.2
+ENV F5GC_VERSION=${F5GC_VERSION}
 
 # Disable Go 1.11 Modules
 ENV GO111MODULE=off

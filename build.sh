@@ -45,6 +45,7 @@ function build_base {
     else
         log "build 'base' image"
         docker build \
+            --build-arg F5GC_VERSION=$F5GC_VERSION \
             -t $DOCKER_IMAGE \
             ./base > /dev/null
     fi
