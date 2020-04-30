@@ -13,9 +13,9 @@ LABEL project="free5gc" \
 ENV F5GC_VERSION ${F5GC_VERSION}
 ENV F5GC_MODULE ${F5GC_MODULE}
 
-# Debug tools (to be removed)
+# Debug tools ~ 100MB (to be removed)
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y vim strace net-tools curl
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y vim strace net-tools iputils-ping curl
 
 WORKDIR /free5gc
 RUN mkdir -p ${F5GC_MODULE}/
