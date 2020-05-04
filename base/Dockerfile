@@ -11,7 +11,7 @@ ENV GO111MODULE=off
 RUN DEBIAND_FRONTEND=noninteractive apt-get -y update \
     && apt-get install -y \
 	git \
-	gcc \
+	gcc-7 \
 	cmake \
 	autoconf \
 	libtool \
