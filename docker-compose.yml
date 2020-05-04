@@ -43,6 +43,7 @@ services:
       control_plane_net:
         aliases:
           - smf
+      pfcp_net:
     deploy:
       restart_policy:
         condition: on-failure
@@ -259,6 +260,29 @@ services:
         max_attempts: 3
         window: 120s
 
+  upf:
+    image: free5gc-upf-v2:v2.0.2
+    container_name: free5gc-upf
+    command: -c ./upf
+    privileged: true
+    volumes:
+      - ./config/upfcfg.yaml:/free5gc/upf/config/upfcfg.yaml
+    networks:
+      user_plane_net:
+        aliases:
+          - upf
+      pfcp_net:
+        aliases:
+          - upfpfcp
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
 networks:
   control_plane_net:
+  user_plane_net:
+  pfcp_net:
   webui_net:
