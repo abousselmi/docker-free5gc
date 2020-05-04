@@ -24,7 +24,7 @@ export F5GC_VERSION=v2.0.2
 To run it, we use the docker compose file:
 
 ```sh
-docker-compose up -d
+docker-compose up
 ```
 
 > Note: UPF container runs in **privileged** mode
