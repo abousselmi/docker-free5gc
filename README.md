@@ -27,6 +27,8 @@ To run it, we use the docker compose file:
 docker-compose up
 ```
 
+> Note: UPF container runs in **privileged** mode
+
 ## Next steps
 
  - Create a CI/CD chain using docker hub or Travis
