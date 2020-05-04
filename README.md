@@ -8,7 +8,7 @@ A docker image for the [Free5GC](https://www.free5gc.org) ([stage 2](https://bit
 
 We start by building the `base` image which will be used to build `Free5GC` network functions for the control and the user planes by simply running the `build.sh` script.
 
-```console
+```sh
 git clone https://github.com/abousselmi/docker-free5gc.git
 cd docker-free5gc
 export F5GC_VERSION=v2.0.2
@@ -23,8 +23,8 @@ export F5GC_VERSION=v2.0.2
 
 To run it, we use the docker compose file:
 
-```console
-docker-compose up
+```sh
+docker-compose up -d
 ```
 
 > Note: UPF container runs in **privileged** mode
