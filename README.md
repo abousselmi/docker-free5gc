@@ -1,10 +1,41 @@
 # Docker-free5gc
-A docker image for the [Free5GC](https://www.free5gc.org) (stage 2) open source 5G Core Network.
 
-## Introduction
+A docker image for the [Free5GC](https://www.free5gc.org) ([stage 2](https://bitbucket.org/free5GC/free5gc-stage-2)) open source 5G Core Network.
 
-The `Dockerfile` provides a multi-stage build. The build image
-is based on the `Golang` docker image `golang:1.12.9-stretch`.
+> Note: This is yet a WIP
+
+## Build
+
+We start by building the `base` image which will be used to build `Free5GC` network functions for the control and the user planes by simply running the `build.sh` script.
+
+```shell
+export F5GC_VERSION=v2.0.2
+./build.sh
+```
+
+> Note: this script was only tested for the version **v2.0.2**
+
+> Note: the `build.sh` script could be removed in the future in favor of docker-compose build.
+
+## Run
+
+To run it, we use the docker compose file:
+
+```console
+docker-compose up
+```
+
+## Next steps
+
+ - Create a CI/CD chain using docker hub or Travis
+ - Create kubernetes resource descriptors
+ - Create a chart to deploy on k8s using helm
+ - Use weave.works router for networking
+
+## Appendix A: Base image
+
+The `base/Dockerfile` provides a multi-stage build. The build image
+is based on the `Golang` docker image `golang:1.12.9-buster`.
 
 The final image is an `alpine` docker image and contains
 the Control and User Plane executables. You can find them under
@@ -65,33 +96,7 @@ This directory should look like:
 3 directories, 42 files
 ```
 
-## Build docker images
-
-### Base image
-We start by building the `base` image. This image is used to build different executables from source.
-
-```shell
-export F5GC_VERSION=v2.0.2
-docker build -t free5gc-base-v2:$F5GC_VERSION ./base
-```
-
-### Control and User plane functions
-
-Then you can build all the modules by simply running the `build.sh` script:
-
-```shell
-export F5GC_VERSION=v2.0.2
-./build.sh
-```
-
-## Next steps
-
- - Create a CI/CD chain using docker hub or Travis
- - Create kubernetes resource descriptors
- - Create a chart to deploy on k8s using helm
- - Use weave.works router for networking
-
- ## Appendix A: Functions Matrix
+## Appendix B: Functions Matrix
 
 This table is created based on the default configuration files of Free5GC.
 
