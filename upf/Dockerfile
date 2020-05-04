@@ -22,7 +22,7 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y libmnl0 libyaml-0-2 iproute2
 
 WORKDIR /free5gc
-RUN mkdir -p config/ ${F5GC_MODULE}/
+RUN mkdir -p ${F5GC_MODULE}/config/
 
 # Copy executable and default configuration 
 COPY --from=builder /free5gc/${F5GC_MODULE} ./${F5GC_MODULE}/
@@ -37,10 +37,5 @@ WORKDIR /free5gc/${F5GC_MODULE}
 
 # Update links
 RUN ldconfig
-
-# Config files volume
-VOLUME [ "/free5gc/config" ]
-
-# FIXME: find a way to add exposed ports
 
 ENTRYPOINT [ "/bin/bash" ]
