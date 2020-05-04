@@ -46,6 +46,8 @@ docker run -it --rm \
 
 The webui uses the UDR configuration file to extract mongodb host:port info. To make it use the new webuicfg.conf, the code is patched when building the binary (see base/Dockerfile).
 
+This is fixed in the stage 3 by the PR: https://github.com/free5gc/webconsole/pull/1
+
 #### NRF
 
 ```console
