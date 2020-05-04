@@ -52,26 +52,28 @@ This directory should look like:
 ├── amf
 ├── ausf
 ├── config
-│   ├── amfcfg.yaml
-│   ├── ausfcfg.yaml
-│   ├── free5GC.yaml
-│   ├── n3iwfcfg.yaml
-│   ├── nrfcfg.yaml
-│   ├── nssfcfg.yaml
-│   ├── pcfcfg.yaml
-│   ├── smfcfg.test.yaml
-│   ├── smfcfg.yaml
-│   ├── udmcfg.yaml
-│   ├── udrcfg.yaml
+│   ├── amfcfg.conf
+│   ├── ausfcfg.conf
+│   ├── free5GC.conf
+│   ├── n3iwfcfg.conf
+│   ├── nrfcfg.conf
+│   ├── nssfcfg.conf
+│   ├── pcfcfg.conf
+│   ├── smfcfg.conf
+│   ├── smfcfg.test.conf
+│   ├── udmcfg.conf
+│   ├── udrcfg.conf
 │   ├── upfcfg.test.yaml
 │   └── upfcfg.yaml
+├── libgtpnl.so.0
+├── liblogger.so
 ├── n3iwf
 ├── nrf
 ├── nssf
 ├── pcf
 ├── smf
 ├── support
-│   └── tls
+│   └── TLS
 │       ├── _debug.key
 │       ├── _debug.pem
 │       ├── amf.key
@@ -93,9 +95,10 @@ This directory should look like:
 ├── testgtpv1
 ├── udm
 ├── udr
-└── upf
+├── upf
+└── webui
 
-3 directories, 42 files
+3 directories, 45 files
 ```
 
 ## Appendix B: Functions Matrix
