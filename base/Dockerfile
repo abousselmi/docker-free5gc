@@ -56,6 +56,10 @@ COPY --from=builder /go/src/free5gc/bin/* ./
 COPY --from=builder /go/src/free5gc/src/upf/build/bin/* ./
 COPY --from=builder /go/src/free5gc/webconsole/webui ./
 
+# Copy linked libs
+COPY --from=builder /go/src/free5gc/src/upf/build/libgtpnl/lib/libgtpnl.so.0 ./
+COPY --from=builder /go/src/free5gc/src/upf/build/utlt_logger/liblogger.so ./
+
 # Copy configuration files (not used for now)
 COPY --from=builder /go/src/free5gc/config/* ./config/
 COPY --from=builder /go/src/free5gc/src/upf/build/config/* ./config/
