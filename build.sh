@@ -67,7 +67,7 @@ function build_nfs {
                 --build-arg F5GC_VERSION=$F5GC_VERSION \
                 --build-arg F5GC_MODULE=$F5GC_MODULE \
                 -t $DOCKER_IMAGE \
-                ./free5gc-nfs > /dev/null
+                ./nfs > /dev/null
         fi
     done
 }
