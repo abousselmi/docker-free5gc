@@ -1,6 +1,6 @@
-## Free5GC NFS
+## Free5GC NFs
 
-This is a generic Dockerfile to build images for multiple functions of the control and user planes.
+This is a generic Dockerfile to build images for multiple functions of the control plane.
 
 CP functions are: 
 
@@ -13,10 +13,6 @@ CP functions are:
  - `UDM`
  - `UDR`
  - `N3IWF`
-
-UP function is:
-
- - `UPF`
 
 ### Utilities
 
