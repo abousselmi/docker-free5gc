@@ -1,4 +1,4 @@
-FROM golang:1.12.9-stretch AS builder
+FROM golang:1.12.9-buster AS builder
 
 # Free5GC version
 ARG F5GC_VERSION=v2.0.2
