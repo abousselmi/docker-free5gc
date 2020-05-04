@@ -52,8 +52,8 @@ function build_base {
 }
 
 function build_nfs {
-    # Build: amf ausf nrf nssf pcf smf udm udr n3iwf upf
-    for module in amf ausf nrf nssf pcf smf udm udr n3iwf upf; do
+    # Build: amf ausf nrf nssf pcf smf udm udr n3iwf
+    for module in amf ausf nrf nssf pcf smf udm udr n3iwf; do
         export F5GC_MODULE=$module
 
         DOCKER_IMAGE="free5gc-$F5GC_MODULE-v2:$F5GC_VERSION"
@@ -70,6 +70,25 @@ function build_nfs {
                 ./free5gc-nfs > /dev/null
         fi
     done
+}
+
+function build_upf {
+    # Build upf
+    export F5GC_MODULE="upf"
+
+    DOCKER_IMAGE="free5gc-$F5GC_MODULE-v2:$F5GC_VERSION"
+    IMG_CHECK=$(docker images -q $DOCKER_IMAGE)
+
+    if [ "$IMG_CHECK" != "" ] ; then
+        log "docker image '$DOCKER_IMAGE' is found locally, skipping build"
+    else
+        log "build image for module 'upf'"
+        docker build \
+            --build-arg F5GC_VERSION=$F5GC_VERSION \
+            --build-arg F5GC_MODULE=$F5GC_MODULE \
+            -t $DOCKER_IMAGE \
+            ./upf > /dev/null
+    fi
 }
 
 function build_webui {
@@ -99,6 +118,7 @@ start=`date +%s`
 
 build_base
 build_nfs
+build_upf
 build_webui
 
 end=`date +%s`
