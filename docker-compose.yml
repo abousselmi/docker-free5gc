@@ -147,29 +147,29 @@ services:
         max_attempts: 3
         window: 120s
 
-  n3iwf:
-    image: free5gc-n3iwf-v2:v2.0.2
-    container_name: free5gc-n3iwf
-    command: -c ./n3iwf
-    depends_on:
-      - nrf
-    environment:
-      - GIN_MODE=debug # release for less verbosity
-    volumes:
-      - ./config/n3iwfcfg.conf:/free5gc/config/n3iwfcfg.conf
-      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
-    networks:
-      control_plane_net:
-        aliases:
-          - n3iwf
-    links: 
-      - "amf"
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+#  n3iwf:
+#    image: free5gc-n3iwf-v2:v2.0.2
+#    container_name: free5gc-n3iwf
+#    command: -c ./n3iwf
+#    depends_on:
+#      - nrf
+#    environment:
+#      - GIN_MODE=debug # release for less verbosity
+#    volumes:
+#      - ./config/n3iwfcfg.conf:/free5gc/config/n3iwfcfg.conf
+#      - ./config/free5GC.conf:/free5gc/config/free5GC.conf
+#    networks:
+#      control_plane_net:
+#        aliases:
+#          - n3iwf
+#    links: 
+#      - "amf"
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#        delay: 5s
+#        max_attempts: 3
+#        window: 120s
 
   udm:
     image: free5gc-udm-v2:v2.0.2
