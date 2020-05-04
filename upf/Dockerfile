@@ -19,7 +19,7 @@ RUN apt-get update \
 
 # Install upf lib deps
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y libmnl0 libyaml-0-2
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y libmnl0 libyaml-0-2 iproute2
 
 WORKDIR /free5gc
 RUN mkdir -p config/ ${F5GC_MODULE}/
