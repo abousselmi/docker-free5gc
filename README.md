@@ -36,6 +36,11 @@ docker-compose up
  - Create a chart to deploy on k8s using helm
  - Use weave.works router for networking
 
+## Free5GC Stage 3
+
+Stage 3 is available here:
+  - https://github.com/free5gc/free5gc-compose
+
 ## Appendix A: Base image
 
 The `base/Dockerfile` provides a multi-stage build. The build image
