@@ -1,8 +1,6 @@
 # Docker Free5gc
 
-A docker image for the [Free5GC](https://www.free5gc.org) ([stage 2](https://bitbucket.org/free5GC/free5gc-stage-2)) open source 5G Core Network.
-
-> Note: This is yet a WIP
+> Note: This project is no more active. Please refer to https://github.com/free5gc/free5gc-compose
 
 ## Build
 
